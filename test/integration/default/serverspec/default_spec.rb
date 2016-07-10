@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'jenkins-centos::default' do
-	
-  	# Serverspec examples can be found at
+
+    # Serverspec examples can be found at
   	# http://serverspec.org/resource_types.html
 
   	describe group('jenkins') do
@@ -20,6 +20,12 @@ describe 'jenkins-centos::default' do
 
   	describe file('/etc/yum.repos.d') do
   		it { should exist }
+        it { should be_directory }
+  	end
+
+  	describe file('/var/log/jenkins') do
+  		it { should exist }
+  		it { should be_directory }
   	end
 
   	describe file('/var/lib/jenkins') do
@@ -27,7 +33,7 @@ describe 'jenkins-centos::default' do
   		it { should be_directory }
   		it { should be_owned_by 'jenkins' }
   		it { should be_grouped_into 'jenkins' }
-  		it { should be_mode '0755' }
+  		it { should be_mode '755' }
   	end
 
   	describe yumrepo('jenkins') do
